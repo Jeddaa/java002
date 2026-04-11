@@ -1,34 +1,30 @@
-package com.tm30;
+package com.tm30.bankapp;
 
 import lombok.Getter;
-import lombok.Setter;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 public class BankApp {
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
-    private LocalDate createdAt;
+    private final LocalDate dateOfBirth;
+    private final LocalDate createdAt;
     private String address;
     private String email;
     private String phoneNumber;
-    private String bvn;
-    private String nin;
+    private final String bvn;
+    private final String nin;
     private double balance;
-    private long accountNumber;
+    private final long accountNumber;
 
     public BankApp(String firstName, String lastName, String phoneNumber, String email,
                    String address, String bvn, String nin, String dob) {
-        if (!email.contains("@") || email == null) {
+        if (!email.contains("@")) {
             throw new IllegalArgumentException("Invalid email provided. Email must contain @");
         }
-        if (!phoneNumber.startsWith("234") || phoneNumber == null)
+        if (!phoneNumber.startsWith("234"))
             throw new IllegalArgumentException("Invalid phone number provided. Phone number must start with 234");
         if (bvn.length() != 12) throw new IllegalArgumentException("Bvn must be 12 digits");
         if (nin.length() != 15) throw new IllegalArgumentException("Nin must be 15 digits");
@@ -50,28 +46,45 @@ public class BankApp {
     }
     public String createProfile(){
 //        this.created_at = LocalDate.now();
-        return String.format("Your Bank account has been created! Your profile is as follows:\n" +
-                        "Name: %s %s\nDate Of Birth: %s\nPhone Number: %s\nEmail Address: %s\nHouse Address: %s" +
-                        "\nBVN: %s\nNIN: %s\nAccount Number: %d\nCurrent Balance: %.2f",
+        return String.format("""
+                        Your Bank account has been created! Your profile is as follows:
+                        Name: %s %s
+                        Date Of Birth: %s
+                        Phone Number: %s
+                        Email Address: %s
+                        House Address: %s
+                        BVN: %s
+                        NIN: %s
+                        Account Number: %d
+                        Current Balance: %.2f""",
                 firstName, lastName, dateOfBirth, phoneNumber, email, address, bvn, nin, accountNumber, balance);
     }
-    public String updateProfile(String firstName, String lastName, String email, String phoneNumber){
-        if (!email.contains("@")  || email == null) {
+    public String updateProfile(String firstName, String lastName, String email, String phoneNumber, String address){
+        if (!email.contains("@")) {
             throw new IllegalArgumentException("Invalid email provided. Email must contain @");
         }
-        if(!phoneNumber.startsWith("234") || phoneNumber == null)
+        if(!phoneNumber.startsWith("234"))
             throw new IllegalArgumentException("Invalid phone number provided. Phone number must start with 234");
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        return String.format("Your updated bank profile is as follows:\n" +
-                        "Name: %s %s\nDate Of Birth: %s\nPhone Number: %s\nEmail Address: %s\nHouse Address: %s" +
-                        "\nBVN: %s\nNIN: %s\nAccount Number: %d\nCurrent Balance: %.2f",
-                this.firstName, this.lastName, dateOfBirth, this.phoneNumber, this.email, address, bvn, nin, accountNumber, balance);
+        this.address = address;
+        return String.format("""
+                        Your updated bank profile is as follows:
+                        Name: %s %s
+                        Date Of Birth: %s
+                        Phone Number: %s
+                        Email Address: %s
+                        House Address: %s
+                        BVN: %s
+                        NIN: %s
+                        Account Number: %d
+                        Current Balance: %.2f""",
+                this.firstName, this.lastName, dateOfBirth, this.phoneNumber, this.email, this.address, bvn, nin, accountNumber, balance);
     }
     /**
-     * @param amount
+     * @param amount to credit
      * @desc to credit an account
      * @return a statement containing the account balance
      */
@@ -82,7 +95,7 @@ public class BankApp {
     }
 
     /**
-     * @param amount
+     * @param amount to debit
      * @desc to debit an account
      * @return a statement containing the account balance
      */
