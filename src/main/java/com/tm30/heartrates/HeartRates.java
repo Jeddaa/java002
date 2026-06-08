@@ -1,4 +1,4 @@
-package com.tm30;
+package com.tm30.heartrates;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -34,6 +34,7 @@ public class HeartRates {
     public Integer getAgeInYears(){
         LocalDate today = LocalDate.now();
         if(birthDate == null) throw new IllegalStateException("Birth Date is not set");
+        if(birthDate.isAfter(today)) throw new IllegalArgumentException("Birth Date cannot be in the future");
         return Period.between(birthDate, today).getYears();
     }
     public int getMaximumHeartRate(){
