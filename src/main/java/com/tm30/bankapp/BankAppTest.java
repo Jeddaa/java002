@@ -24,17 +24,15 @@ public class BankAppTest {
         System.out.println("Please enter your date of birth in YYYY-MM-DD: ");
         String dob = scanner.nextLine();
 
-        BankApp user1 = new BankApp(firstName, lastName, phoneNumber, email, address, bvn, nin, dob );
-        System.out.println(user1.createProfile());
-        System.out.printf("Your account Number is: %d\n", user1.getAccountNumber());
+        User customer = new User(firstName, lastName, phoneNumber, email, address, bvn, nin, dob );
+        BankApp bank = new BankApp();
+        BankAccount user1 = bank.openAccount(customer);
+
+        System.out.printf("Your account Number is: %s\n", user1.getAccountNumber());
         System.out.println(user1.creditAccount(1000));
         System.out.printf("Your current account balance is: %f\n", user1.getBalance());
         System.out.println(user1.debitAccount(100));
         System.out.printf("Your current account balance is: %f\n", user1.getBalance());
-        System.out.printf("%s %s\n", user1.getFirstName(), user1.getLastName());
-        System.out.println("@@@@@@@@@@@@@@ Testing the updating profile @@@@@@@@@@@@@");
-        System.out.println(user1.updateProfile("moyosore", "oduwole", "test@gmail.com",
-                "23409121232", "ikotun"));
-
+        System.out.printf("%s %s\n", user1.getOwner().getFirstName(), user1.getOwner().getLastName());
     }
 }
