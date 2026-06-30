@@ -1,4 +1,4 @@
-package com.tm30;
+package com.tm30.healthprofile;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -11,7 +11,7 @@ public class HealthProfile {
     private double height;
     private int weight;
 
-    public HealthProfile(String firstName, String lastName, LocalDate birthDate, String gender, Double height, int weight) {
+    public HealthProfile(String firstName, String lastName, LocalDate birthDate, String gender, double height, int weight) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -59,6 +59,7 @@ public class HealthProfile {
     public int getAgeInYears(){
         LocalDate today = LocalDate.now();
         if(birthDate == null) throw new IllegalArgumentException("Birth Date is not set");
+        if(birthDate.isAfter(today)) throw new IllegalArgumentException("Birth Date cannot be in the future");
         return Period.between(birthDate, today).getYears();
     }
     public int getMaximumHeartRate(){
